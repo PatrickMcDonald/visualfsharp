@@ -8,12 +8,12 @@ open NUnit.Framework
 open FSharp.Core.Unittests.LibraryTestFx
 
 // Various tests for the:
-// Microsoft.FSharp.Collections.seq type
+// Microsoft.FSharp.Core.String module
 
 (*
 [Test Strategy]
 Make sure each method works on:
-* Few charachter string ("foo")
+* Few character string ("foo")
 * Empty string   ("")
 * Null string (null)
 *)
@@ -183,3 +183,66 @@ type StringModule() =
 
         let e3 = String.length null
         Assert.AreEqual(0, e3)
+
+    [<Test>]
+    member this.Sub() =
+        Assert.AreEqual("", String.sub 0 0 "")
+
+        for i in 0..3 do
+            Assert.AreEqual("", String.sub i 0 "foo")
+
+        Assert.AreEqual("o", String.sub 1 1 "foo")
+
+        Assert.AreEqual("", String.sub 0 0 null)
+
+        [ -1, 0, "foo"
+          -1, 2, "foo"
+          1, -1, "foo"
+          0, -1, "foo"
+          0, 4, "foo"
+          3, 1, "foo"
+
+          0, 1, ""
+          1, 0, ""
+
+          0, 1, null
+          1, 0, null
+        ] |> List.iter (fun (i, n, s) -> CheckThrowsArgumentException (fun () -> String.sub i n s |> ignore))
+
+    [<Test>]
+    member this.Skip() =
+        Assert.AreEqual("", String.skip -1 "")
+        Assert.AreEqual("", String.skip 0 "")
+
+        Assert.AreEqual("foo", String.skip 0 "foo")
+        Assert.AreEqual("oo", String.skip 1 "foo")
+        Assert.AreEqual("o", String.skip 2 "foo")
+        Assert.AreEqual("", String.skip 3 "foo")
+
+        Assert.AreEqual("", String.skip -1 null)
+        Assert.AreEqual("", String.skip 0 null)
+
+        [ 4, "foo"
+          10, "foo"
+          1, ""
+          1, null
+        ] |> List.iter (fun (n, s) -> CheckThrowsArgumentException (fun () -> String.skip n s |> ignore))
+
+    [<Test>]
+    member this.Take() =
+        Assert.AreEqual("", String.take 0 "")
+
+        Assert.AreEqual("", String.take 0 "foo")
+        Assert.AreEqual("f", String.take 1 "foo")
+        Assert.AreEqual("fo", String.take 2 "foo")
+        Assert.AreEqual("foo", String.take 3 "foo")
+
+        Assert.AreEqual("", String.take 0 null)
+
+        [ 4, "foo"
+          10, "foo"
+          1, ""
+          -1, ""
+          1, null
+          -1, null
+        ] |> List.iter (fun (n, s) -> CheckThrowsArgumentException (fun () -> String.take n s |> ignore))

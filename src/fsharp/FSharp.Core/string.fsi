@@ -114,3 +114,31 @@ namespace Microsoft.FSharp.Core
         [<CompiledName("Length")>]
         val length: str:string -> int
 
+        /// <summary>Returns the substring of the input string specified by the starting index and the length.</summary>
+        /// <param name="startIndex">The index of the first element of the substring.</param>
+        /// <param name="length">The length of the substring.</param>
+        /// <param name="str">The input string.</param>
+        /// <returns>A string that is equivalent to the substring of length length that begins at startIndex in this instance,
+        /// or Empty if startIndex is equal to the length of this instance and length is zero.</returns>
+        /// <exception cref="System.ArgumentException">Thrown when either startIndex or count is negative,
+        /// or when there aren't enough characters in the input string.</exception>
+        [<CompiledName("Sub")>]
+        val sub: startIndex:int -> length:int -> str:string -> string
+
+        /// <summary>Returns the substring of the input string excluding the first N characters.</summary>
+        /// <param name="count">The number of characters to skip.</param>
+        /// <param name="str">The input string.</param>
+        /// <returns>The result string.</returns>
+        /// <exception cref="System.ArgumentException">Thrown when there aren't enough characters in the input string.</exception>
+        [<CompiledName("Skip")>]
+        val skip: count:int -> str:string -> string
+
+        /// <summary>Returns a substring containing the first N characters of the input string.</summary>
+        /// <param name="count">The number of characters to take.</param>
+        /// <param name="str">The input string.</param>
+        /// <returns>The result string.</returns>
+        /// <exception cref="System.ArgumentExcepion">Thrown when count is negative.</exception>
+        /// <exception cref="System.InvalidOperationException">Thrown when count exceeds the number of characters
+        /// in the input string.</exception>
+        [<CompiledName("Take")>]
+        val take: count:int -> str:string -> string
