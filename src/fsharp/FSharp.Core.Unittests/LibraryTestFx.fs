@@ -18,7 +18,7 @@ let CheckThrowsExn<'a when 'a :> exn> (f : unit -> unit) =
             let _ = f ()
             false // Did not throw!
         with
-        | :? 'a
+        | :? 'a as ex when ex.GetType() = typeof<'a>
             -> true   // Thew null ref, OK
         | _ -> false  // Did now throw a null ref exception!
     if funcThrowsAsExpected
