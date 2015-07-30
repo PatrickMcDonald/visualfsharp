@@ -99,8 +99,8 @@ namespace Microsoft.FSharp.Core
         [<CompiledName("Sub")>]
         let sub startIndex count (str:string) =
             let str = emptyIfNull str
+            if startIndex < 0 then invalidArg "startIndex" (SR.GetString(SR.inputMustBeNonNegative))
             if count < 0 then invalidArg "count" (SR.GetString(SR.inputMustBeNonNegative))
-            if startIndex < 0 then invalidArg "count" (SR.GetString(SR.inputMustBeNonNegative))
             if startIndex + count > str.Length then invalidArg "count" (SR.GetString(SR.outOfRange))
             str.Substring (startIndex, count)
 

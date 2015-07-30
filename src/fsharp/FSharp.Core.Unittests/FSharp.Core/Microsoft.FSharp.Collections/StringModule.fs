@@ -242,7 +242,10 @@ type StringModule() =
         [ 4, "foo"
           10, "foo"
           1, ""
-          -1, ""
           1, null
+        ] |> List.iter (fun (n, s) -> CheckThrowsInvalidOperationExn (fun () -> String.take n s |> ignore))
+
+        [ -1, "foo"
+          -1, ""
           -1, null
         ] |> List.iter (fun (n, s) -> CheckThrowsArgumentException (fun () -> String.take n s |> ignore))
