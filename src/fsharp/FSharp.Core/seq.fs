@@ -1892,3 +1892,29 @@ namespace Microsoft.FSharp.Collections
             if count <= 0 then invalidArg "count" (SR.GetString(SR.inputMustBePositive))
             mkDelayedSeq (fun () ->
                 source |> toArray |> Array.splitInto count :> seq<_>)
+
+        [<CompiledName("Union")>]
+        let union (source1 : seq<'T>) (source2 : seq<'T>) =
+            checkNonNull "source1" source1
+            checkNonNull "source2" source2
+            seq { let hashSet = HashSet<'T>(HashIdentity.Structural<'T>)
+                  for v in source1 do
+                      if hashSet.Add(v) then
+                          yield v
+
+                  for v in source2 do
+                      if hashSet.Add(v) then
+                          yield v }
+
+        [<CompiledName("Intersection")>]
+        let intersection (source1 : seq<'T>) (source2 : seq<'T>) =
+            checkNonNull "source1" source1
+            checkNonNull "source2" source2
+            seq { let hashSet1 = HashSet<'T>(HashIdentity.Structural<'T>)
+                  for v in source1 do
+                      hashSet1.Add(v) |> ignore
+
+                  let hashSet2 = HashSet<'T>(HashIdentity.Structural<'T>)
+                  for v in source2 do
+                      if hashSet2.Add(v) && not (hashSet1.Add(v)) then
+                          yield v }
