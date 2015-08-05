@@ -585,6 +585,14 @@ type SeqModule() =
         ()
 
     [<Test>]
+    member this.Union() =
+        ()
+
+    [<Test>]
+    member this.Intersection() =
+        ()
+
+    [<Test>]
     member this.Exists() =
 
         // Integer Seq
