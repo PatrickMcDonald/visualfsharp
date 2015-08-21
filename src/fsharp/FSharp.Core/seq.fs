@@ -1911,10 +1911,10 @@ namespace Microsoft.FSharp.Collections
             checkNonNull "source1" source1
             checkNonNull "source2" source2
             seq { let hashSet1 = HashSet<'T>(HashIdentity.Structural<'T>)
-                  for v in source1 do
+                  for v in source2 do
                       hashSet1.Add(v) |> ignore
 
                   let hashSet2 = HashSet<'T>(HashIdentity.Structural<'T>)
-                  for v in source2 do
+                  for v in source1 do
                       if hashSet2.Add(v) && not (hashSet1.Add(v)) then
                           yield v }

@@ -517,6 +517,18 @@ namespace Microsoft.FSharp.Collections
         [<CompiledName("TryHead")>]
         val tryHead: source:seq<'T> -> 'T option
 
+        /// <summary>Returns a new sequence with the distinct elements which appear in both the first sequence and the second sequence,
+        /// using generic hash and equality comparisons to compare values.</summary>
+        ///
+        /// <param name="source1">The first sequence.</param>
+        /// <param name="source2">The second sequence.</param>
+        ///
+        /// <returns>A sequence that contains the set intersection of the elements of two sequences.</returns>
+        ///
+        /// <exception cref="System.ArgumentNullException">Thrown when either of the two input sequences is null.</exception>
+        [<CompiledName("Intersection")>]
+        val intersection: source1:seq<'T> -> source2:seq<'T> -> seq<'T> when 'T : equality
+
         /// <summary>Returns the last element of the sequence.</summary>
         /// <param name="source">The input sequence.</param>
         /// <returns>The last element of the sequence.</returns>
@@ -1284,6 +1296,18 @@ namespace Microsoft.FSharp.Collections
         /// <returns>The result sequence.</returns>
         [<CompiledName("Unfold")>]
         val unfold   : generator:('State -> ('T * 'State) option) -> state:'State -> seq<'T>
+
+        /// <summary>Returns a new sequence with the distinct elements which appear in either the first sequence or the second sequence,
+        /// using generic hash and equality comparisons to compare values.</summary>
+        ///
+        /// <param name="source1">The first sequence.</param>
+        /// <param name="source2">The second sequence.</param>
+        ///
+        /// <returns>A sequence that contains the set union of the elements of two sequences.</returns>
+        ///
+        /// <exception cref="System.ArgumentNullException">Thrown when either of the two input sequences is null.</exception>
+        [<CompiledName("Union")>]
+        val union: source1:seq<'T> -> source2:seq<'T> -> seq<'T> when 'T : equality
 
         /// <summary>Returns a sequence that yields sliding windows containing elements drawn from the input
         /// sequence. Each window is returned as a fresh array.</summary>
