@@ -586,10 +586,65 @@ type SeqModule() =
 
     [<Test>]
     member this.Union() =
+        // integer Seq
+        let intSeq1 = seq { yield! {1..100}
+                            yield! {1..100} }
+        let intSeq2 = {51..150}
+        let expectedIntSeq = {1..150}
+
+        VerifySeqsEqual expectedIntSeq <| Seq.union intSeq2 intSeq1
+
+        // string Seq
+        let strSeq1 = seq ["a"; "b"; "c"; "d"; "a"]
+        let strSeq2 = seq ["b"; "f"; "c"; "g"]
+        let expectedStrSeq = seq ["a"; "b"; "c"; "d"; "f"; "g"]
+
+        VerifySeqsEqual expectedStrSeq <| Seq.union strSeq2 strSeq1
+
+        // empty Seq
+        let emptyIntSeq = Seq.empty<int>
+        VerifySeqsEqual {1..100} <| Seq.union emptyIntSeq intSeq1
+        VerifySeqsEqual {1..100} <| Seq.union intSeq1 emptyIntSeq
+        VerifySeqsEqual emptyIntSeq <| Seq.union emptyIntSeq emptyIntSeq
+        VerifySeqsEqual {1..100} <| Seq.union intSeq1 intSeq1
+
+        // null Seq
+        let nullSeq : seq<int> = null
+        CheckThrowsArgumentNullException(fun () -> Seq.union nullSeq emptyIntSeq |> ignore)
+        CheckThrowsArgumentNullException(fun () -> Seq.union emptyIntSeq nullSeq |> ignore)
+        CheckThrowsArgumentNullException(fun () -> Seq.union nullSeq nullSeq |> ignore)
+
         ()
 
     [<Test>]
     member this.Intersection() =
+        // integer Seq
+        let intSeq1 = seq { yield! {1..100}
+                            yield! {1..100} }
+        let intSeq2 = {51..150}
+        let expectedIntSeq = {51..100}
+
+        VerifySeqsEqual expectedIntSeq <| Seq.intersection intSeq2 intSeq1
+
+        // string Seq
+        let strSeq1 = seq ["a"; "b"; "c"; "d"; "a"]
+        let strSeq2 = seq ["b"; "f"; "c"; "g"]
+        let expectedStrSeq = seq ["b"; "c"]
+
+        VerifySeqsEqual expectedStrSeq <| Seq.intersection strSeq2 strSeq1
+
+        // empty Seq
+        let emptyIntSeq = Seq.empty<int>
+        VerifySeqsEqual emptyIntSeq <| Seq.intersection emptyIntSeq intSeq1
+        VerifySeqsEqual emptyIntSeq <| Seq.intersection intSeq1 emptyIntSeq
+        VerifySeqsEqual emptyIntSeq <| Seq.intersection emptyIntSeq emptyIntSeq
+
+        // null Seq
+        let nullSeq : seq<int> = null
+        CheckThrowsArgumentNullException(fun () -> Seq.intersection nullSeq emptyIntSeq |> ignore)
+        CheckThrowsArgumentNullException(fun () -> Seq.intersection emptyIntSeq nullSeq |> ignore)
+        CheckThrowsArgumentNullException(fun () -> Seq.intersection nullSeq nullSeq |> ignore)
+
         ()
 
     [<Test>]

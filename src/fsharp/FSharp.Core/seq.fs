@@ -1898,11 +1898,11 @@ namespace Microsoft.FSharp.Collections
             checkNonNull "source1" source1
             checkNonNull "source2" source2
             seq { let hashSet = HashSet<'T>(HashIdentity.Structural<'T>)
-                  for v in source1 do
+                  for v in source2 do
                       if hashSet.Add(v) then
                           yield v
 
-                  for v in source2 do
+                  for v in source1 do
                       if hashSet.Add(v) then
                           yield v }
 
@@ -1910,11 +1910,8 @@ namespace Microsoft.FSharp.Collections
         let intersection (source1 : seq<'T>) (source2 : seq<'T>) =
             checkNonNull "source1" source1
             checkNonNull "source2" source2
-            seq { let hashSet1 = HashSet<'T>(HashIdentity.Structural<'T>)
-                  for v in source2 do
-                      hashSet1.Add(v) |> ignore
-
+            seq { let hashSet1 = HashSet<'T>(source1, HashIdentity.Structural<'T>)
                   let hashSet2 = HashSet<'T>(HashIdentity.Structural<'T>)
-                  for v in source1 do
+                  for v in source2 do
                       if hashSet2.Add(v) && not (hashSet1.Add(v)) then
                           yield v }

@@ -29,3 +29,4 @@ let isStable sorted = sorted |> Seq.pairwise |> Seq.forall (fun ((ia, a),(ib, b)
 
 let isSorted sorted = sorted |> Seq.pairwise |> Seq.forall (fun (a,b) -> a <= b)
 let haveSameElements xs ys = xs |> Seq.forall (fun x -> ys |> Seq.exists ((=) x)) && xs |> Seq.forall (fun y -> xs |> Seq.exists ((=) y))
+let seqsAreEqual xs ys = let xs = Seq.cache xs in let ys = Seq.cache ys in Seq.length xs = Seq.length ys && Seq.zip xs ys |> Seq.forall (fun (x, y) -> x = y)
