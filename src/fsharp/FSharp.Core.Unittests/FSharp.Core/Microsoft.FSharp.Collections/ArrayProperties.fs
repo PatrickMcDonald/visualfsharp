@@ -22,9 +22,9 @@ module StableProperties =
 
 module UnionProperties =
     let compareUnionWithAppendAndDistinct<'a when 'a : equality> (xs : 'a []) (ys : 'a []) =
-        let union = Array.union ys xs
-        let appendAndDistinct = Array.append xs ys |> Array.distinct
-        appendAndDistinct = union
+        let actual = Array.union ys xs
+        let expected = Array.append xs ys |> Array.distinct
+        expected = actual
 
     [<Test>]
     let ``Array.union is like Array.append >> Array.distinct`` () =
@@ -32,9 +32,9 @@ module UnionProperties =
         Check.QuickThrowOnFailure compareUnionWithAppendAndDistinct<string>
 
     let xsUnionXs<'a when 'a : equality> (xs : 'a []) =
-        let union = Array.union xs xs
-        let distinct = Array.distinct xs
-        distinct = union
+        let actual = Array.union xs xs
+        let expected = Array.distinct xs
+        expected = actual
 
     [<Test>]
     let ``Array.union xs xs is like Array.distinct`` () =
@@ -42,8 +42,8 @@ module UnionProperties =
         Check.QuickThrowOnFailure xsUnionXs<string>
 
     let xsUnionEmpty<'a when 'a : equality> (xs : 'a []) =
-        let distinct = Array.distinct xs
-        distinct = (Array.union xs [||]) && distinct = (Array.union [||] xs)
+        let expected = Array.distinct xs
+        expected = (Array.union xs [||]) && expected = (Array.union [||] xs)
 
     [<Test>]
     let ``Array.union xs [||] is like Array.distinct`` () =
@@ -52,9 +52,9 @@ module UnionProperties =
 
 module IntersectionProperties =
     let compareIntersectionWithFilterAndDistinct<'a when 'a : equality> (xs : 'a []) (ys : 'a []) =
-        let intersection = Array.intersection ys xs
-        let filterAndDistinct = xs |> Array.filter (fun x -> Array.contains x ys) |> Array.distinct
-        filterAndDistinct = intersection
+        let actual = Array.intersection ys xs
+        let expected = xs |> Array.filter (fun x -> Array.contains x ys) |> Array.distinct
+        expected = actual
 
     [<Test>]
     let ``Array.intersection is like Array.filter >> Array.distinct`` () =
@@ -62,9 +62,9 @@ module IntersectionProperties =
         Check.QuickThrowOnFailure compareIntersectionWithFilterAndDistinct<string>
 
     let xsIntersectionXs<'a when 'a : equality> (xs : 'a []) =
-        let intersection = Array.intersection xs xs
-        let distinct = Array.distinct xs
-        distinct = intersection
+        let actual = Array.intersection xs xs
+        let expected = Array.distinct xs
+        expected = actual
 
     [<Test>]
     let ``Array.intersection xs xs is like Array.distinct`` () =

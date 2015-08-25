@@ -395,6 +395,18 @@ let ``init is consistent`` () =
     Check.QuickThrowOnFailure init<string>
     Check.QuickThrowOnFailure init<NormalFloat>
 
+let intersection<'a when 'a : equality> (xs : 'a []) (ys: 'a []) =
+    let s = xs |> Seq.intersection ys
+    let l = xs |> List.ofArray |> List.intersection (List.ofArray ys)
+    let a = xs |> Array.intersection ys
+    Seq.toArray s = a && List.toArray l = a
+
+[<Test>]
+let ``intersection is consistent`` () =
+    Check.QuickThrowOnFailure intersection<int>
+    Check.QuickThrowOnFailure intersection<string>
+    Check.QuickThrowOnFailure intersection<NormalFloat>
+
 let isEmpty<'a when 'a : equality> (xs : 'a []) =
     let s = xs |> Seq.isEmpty
     let l = xs |> List.ofArray |> List.isEmpty
@@ -1160,6 +1172,18 @@ let ``unfold is consistent`` () =
     Check.QuickThrowOnFailure unfold<string,string>
     Check.QuickThrowOnFailure unfold<float,int>
     Check.QuickThrowOnFailure unfold<float,string>
+
+let union<'a when 'a : equality> (xs : 'a []) (ys: 'a []) =
+    let s = xs |> Seq.union ys
+    let l = xs |> List.ofArray |> List.union (List.ofArray ys)
+    let a = xs |> Array.union ys
+    Seq.toArray s = a && List.toArray l = a
+
+[<Test>]
+let ``union is consistent`` () =
+    Check.QuickThrowOnFailure union<int>
+    Check.QuickThrowOnFailure union<string>
+    Check.QuickThrowOnFailure union<NormalFloat>
 
 let unzip<'a when 'a : equality> (xs:('a*'a) []) =       
     // no seq version

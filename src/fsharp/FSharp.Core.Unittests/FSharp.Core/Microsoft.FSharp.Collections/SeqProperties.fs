@@ -41,9 +41,9 @@ module StableProperties =
 
 module UnionProperties =
     let compareUnionWithAppendAndDistinct<'a when 'a : equality> (xs : 'a []) (ys : 'a []) =
-        let union = Seq.union ys xs
-        let appendAndDistinct = Seq.append xs ys |> Seq.distinct
-        seqsAreEqual appendAndDistinct union
+        let actual = Seq.union ys xs
+        let expected = Seq.append xs ys |> Seq.distinct
+        seqsAreEqual expected actual
 
     [<Test>]
     let ``Seq.union is like Seq.append >> Seq.distinct`` () =
@@ -51,9 +51,9 @@ module UnionProperties =
         Check.QuickThrowOnFailure compareUnionWithAppendAndDistinct<string>
 
     let xsUnionXs<'a when 'a : equality> (xs : 'a []) =
-        let union = Seq.union xs xs
-        let distinct = Seq.distinct xs
-        seqsAreEqual distinct union
+        let actual = Seq.union xs xs
+        let expected = Seq.distinct xs
+        seqsAreEqual expected actual
 
     [<Test>]
     let ``Seq.union xs xs is like Seq.distinct`` () =
@@ -61,8 +61,8 @@ module UnionProperties =
         Check.QuickThrowOnFailure xsUnionXs<string>
 
     let xsUnionEmpty<'a when 'a : equality> (xs : 'a []) =
-        let distinct = Seq.distinct xs
-        seqsAreEqual distinct (Seq.union xs []) && seqsAreEqual distinct (Seq.union [] xs)
+        let expected = Seq.distinct xs
+        seqsAreEqual expected (Seq.union xs []) && seqsAreEqual expected (Seq.union [] xs)
 
     [<Test>]
     let ``Seq.union xs [] is like Seq.distinct`` () =
@@ -71,9 +71,9 @@ module UnionProperties =
 
 module IntersectionProperties =
     let compareIntersectionWithFilterAndDistinct<'a when 'a : equality> (xs : 'a []) (ys : 'a []) =
-        let intersection = Seq.intersection ys xs
-        let filterAndDistinct = xs |> Seq.filter (fun x -> Seq.contains x ys) |> Seq.distinct
-        seqsAreEqual filterAndDistinct intersection
+        let actual = Seq.intersection ys xs
+        let expected = xs |> Seq.filter (fun x -> Seq.contains x ys) |> Seq.distinct
+        seqsAreEqual expected actual
 
     [<Test>]
     let ``Seq.intersection is like Seq.filter >> Seq.distinct`` () =
@@ -81,9 +81,9 @@ module IntersectionProperties =
         Check.QuickThrowOnFailure compareIntersectionWithFilterAndDistinct<string>
 
     let xsIntersectionXs<'a when 'a : equality> (xs : 'a []) =
-        let intersection = Seq.intersection xs xs
-        let distinct = Seq.distinct xs
-        seqsAreEqual distinct intersection
+        let actual = Seq.intersection xs xs
+        let expected = Seq.distinct xs
+        seqsAreEqual expected actual
 
     [<Test>]
     let ``Seq.intersection xs xs is like Seq.distinct`` () =
@@ -91,7 +91,8 @@ module IntersectionProperties =
         Check.QuickThrowOnFailure xsIntersectionXs<string>
 
     let xsIntersectionEmpty<'a when 'a : equality> (xs : 'a []) =
-        seqsAreEqual [] (Seq.intersection xs []) && seqsAreEqual [] (Seq.intersection [] xs)
+        let expected = Seq.empty
+        seqsAreEqual expected (Seq.intersection xs []) && seqsAreEqual expected (Seq.intersection [] xs)
 
     [<Test>]
     let ``Seq.intersection xs [] is empty`` () =

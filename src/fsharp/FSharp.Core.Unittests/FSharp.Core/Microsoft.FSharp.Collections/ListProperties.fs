@@ -823,3 +823,61 @@ let ``List.sumBy calculates the sum of the mapped list`` () =
     Check.QuickThrowOnFailure sumBy<int>
     Check.QuickThrowOnFailure sumBy<string> 
     Check.QuickThrowOnFailure sumBy<float>
+
+let compareUnionWithAppendAndDistinct<'a when 'a : equality> (xs : 'a list) (ys : 'a list) =
+    let actual = List.union ys xs
+    let expected = List.append xs ys |> List.distinct
+    expected = actual
+
+[<Test>]
+let ``List.union is like List.append >> List.distinct`` () =
+    Check.QuickThrowOnFailure compareUnionWithAppendAndDistinct<int>
+    Check.QuickThrowOnFailure compareUnionWithAppendAndDistinct<string>
+
+let xsUnionXs<'a when 'a : equality> (xs : 'a list) =
+    let actual = List.union xs xs
+    let expected = List.distinct xs
+    expected = actual
+
+[<Test>]
+let ``List.union xs xs is like List.distinct`` () =
+    Check.QuickThrowOnFailure xsUnionXs<int>
+    Check.QuickThrowOnFailure xsUnionXs<string>
+
+let xsUnionEmpty<'a when 'a : equality> (xs : 'a list) =
+    let expected = List.distinct xs
+    expected = (List.union xs []) && expected = (List.union [] xs)
+
+[<Test>]
+let ``List.union xs [] is like List.distinct`` () =
+    Check.QuickThrowOnFailure xsUnionEmpty<int>
+    Check.QuickThrowOnFailure xsUnionEmpty<string>
+
+let compareIntersectionWithFilterAndDistinct<'a when 'a : equality> (xs : 'a list) (ys : 'a list) =
+    let actual = List.intersection ys xs
+    let expected = xs |> List.filter (fun x -> List.contains x ys) |> List.distinct
+    expected = actual
+
+[<Test>]
+let ``List.intersection is like List.filter >> List.distinct`` () =
+    Check.QuickThrowOnFailure compareIntersectionWithFilterAndDistinct<int>
+    Check.QuickThrowOnFailure compareIntersectionWithFilterAndDistinct<string>
+
+let xsIntersectionXs<'a when 'a : equality> (xs : 'a list) =
+    let actual = List.intersection xs xs
+    let expected = List.distinct xs
+    expected = actual
+
+[<Test>]
+let ``List.intersection xs xs is like List.distinct`` () =
+    Check.QuickThrowOnFailure xsIntersectionXs<int>
+    Check.QuickThrowOnFailure xsIntersectionXs<string>
+
+let xsIntersectionEmpty<'a when 'a : equality> (xs : 'a list) =
+    let expected = []
+    expected = (List.intersection xs []) && expected = (List.intersection [] xs)
+
+[<Test>]
+let ``List.intersection xs [] is empty`` () =
+    Check.QuickThrowOnFailure xsIntersectionEmpty<int>
+    Check.QuickThrowOnFailure xsIntersectionEmpty<string>

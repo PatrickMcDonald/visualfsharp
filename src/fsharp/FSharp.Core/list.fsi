@@ -346,6 +346,16 @@ namespace Microsoft.FSharp.Collections
         [<CompiledName("Initialize")>]
         val init: length:int -> initializer:(int -> 'T) -> 'T list
 
+        /// <summary>Returns a list with the distinct elements which appear in both the first list and the second list,
+        /// using generic hash and equality comparisons to compare values.</summary>
+        ///
+        /// <param name="list1">The first list.</param>
+        /// <param name="list2">The second list.</param>
+        ///
+        /// <returns>A list that contains the set intersection of the elements of two lists.</returns>
+        [<CompiledName("Intersection")>]
+        val intersection: list1:'T list -> list2:'T list -> 'T list when 'T : equality
+
         /// <summary>Returns true if the list contains no elements, false otherwise.</summary>
         /// <param name="list">The input list.</param>
         /// <returns>True if the list is empty.</returns>
@@ -844,6 +854,16 @@ namespace Microsoft.FSharp.Collections
         /// <returns>The result list.</returns>
         [<CompiledName("Unfold")>]
         val unfold<'T,'State> : generator:('State -> ('T * 'State) option) -> state:'State -> 'T list
+
+        /// <summary>Returns a list with the distinct elements which appear in either the first list or the second list,
+        /// using generic hash and equality comparisons to compare values.</summary>
+        ///
+        /// <param name="list1">The first list.</param>
+        /// <param name="list2">The second list.</param>
+        ///
+        /// <returns>A list that contains the set union of the elements of two lists.</returns>
+        [<CompiledName("Union")>]
+        val union: list1:'T list -> list2:'T list -> 'T list when 'T : equality
 
         /// <summary>Splits a list of pairs into two lists.</summary>
         /// <param name="list">The input list.</param>

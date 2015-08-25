@@ -347,6 +347,57 @@ type ListModule() =
         ()
 
     [<Test>]
+    member this.Union() =
+        // integer list
+        let intList1 = [ yield! {1..100}
+                         yield! {1..100} ]
+        let intList2 = [51..150]
+        let expectedIntList = [1..150]
+
+        Assert.AreEqual(expectedIntList, List.union intList2 intList1)
+
+        // string list
+        let strList1 = ["a"; "b"; "c"; "d"; "a"]
+        let strList2 = ["b"; "f"; "c"; "g"]
+        let expectedStrList = ["a"; "b"; "c"; "d"; "f"; "g"]
+
+        Assert.AreEqual(expectedStrList, List.union strList2 strList1)
+
+        // empty list
+        let emptyIntList = []
+        Assert.AreEqual([1..100], List.union emptyIntList intList1)
+        Assert.AreEqual([1..100], List.union intList1 emptyIntList)
+        Assert.AreEqual(emptyIntList, List.union emptyIntList emptyIntList)
+        Assert.AreEqual([1..100], List.union intList1 intList1)
+
+        ()
+
+    [<Test>]
+    member this.Intersection() =
+        // integer list
+        let intList1 = [ yield! {1..100}
+                         yield! {1..100} ]
+        let intList2 = [51..150]
+        let expectedIntList = [51..100]
+
+        Assert.AreEqual(expectedIntList, List.intersection intList2 intList1)
+
+        // string list
+        let strList1 = ["a"; "b"; "c"; "d"; "a"]
+        let strList2 = ["b"; "f"; "c"; "g"]
+        let expectedStrList = ["b"; "c"]
+
+        Assert.AreEqual(expectedStrList, List.intersection strList2 strList1)
+
+        // empty list
+        let emptyIntList = []
+        Assert.AreEqual(emptyIntList, List.intersection emptyIntList intList1)
+        Assert.AreEqual(emptyIntList, List.intersection intList1 emptyIntList)
+        Assert.AreEqual(emptyIntList, List.intersection emptyIntList emptyIntList)
+
+        ()
+
+    [<Test>]
     member this.Exists() =
         // integer List
         let intArr = [ 2;4;6;8 ]

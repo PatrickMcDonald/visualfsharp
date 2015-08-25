@@ -447,6 +447,16 @@ namespace Microsoft.FSharp.Collections
                 let cached = HashSet(itemsToExclude, HashIdentity.Structural)
                 list |> filter cached.Add
 
+        [<CompiledName("Union")>]
+        let union list1 list2 =
+            list2 @ list1 |> distinct
+
+        [<CompiledName("Intersection")>]
+        let intersection (list1: _ list) list2 =
+            let hashSet1 = HashSet(list1, HashIdentity.Structural)
+            let hashSet2 = HashSet(HashIdentity.Structural)
+            list2 |> filter (fun x -> hashSet2.Add x && not (hashSet1.Add x))
+
         [<CompiledName("Where")>]
         let where f x = Microsoft.FSharp.Primitives.Basics.List.filter f x
 
