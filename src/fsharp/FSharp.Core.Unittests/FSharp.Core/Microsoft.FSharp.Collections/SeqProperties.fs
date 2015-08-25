@@ -72,7 +72,7 @@ module UnionProperties =
 module IntersectionProperties =
     let compareIntersectionWithFilterAndDistinct<'a when 'a : equality> (xs : 'a []) (ys : 'a []) =
         let intersection = Seq.intersection ys xs
-        let filterAndDistinct = xs |> Seq.filter (fun x -> Seq.contains x ys) |> Seq.distinct |> Array.ofSeq
+        let filterAndDistinct = xs |> Seq.filter (fun x -> Seq.contains x ys) |> Seq.distinct
         seqsAreEqual filterAndDistinct intersection
 
     [<Test>]

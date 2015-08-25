@@ -459,6 +459,18 @@ namespace Microsoft.FSharp.Collections
         [<CompiledName("Initialize")>]
         val inline init: count:int -> initializer:(int -> 'T) -> 'T[]
 
+        /// <summary>Returns an array with the distinct elements which appear in both the first array and the second array,
+        /// using generic hash and equality comparisons to compare values.</summary>
+        ///
+        /// <param name="array1">The first array.</param>
+        /// <param name="array2">The second array.</param>
+        ///
+        /// <returns>An array that contains the set intersection of the elements of two arrays.</returns>
+        ///
+        /// <exception cref="System.ArgumentNullException">Thrown when either of the two input arrays is null.</exception>
+        [<CompiledName("Intersection")>]
+        val intersection: array1:'T[] -> array2:'T[] -> 'T[] when 'T : equality
+
         /// <summary>Creates an array where the entries are initially the default value Unchecked.defaultof&lt;'T&gt;.</summary>
         /// <param name="count">The length of the array to create.</param>
         /// <returns>The created array.</returns>
@@ -1037,6 +1049,18 @@ namespace Microsoft.FSharp.Collections
         /// <returns>The result array.</returns>
         [<CompiledName("Unfold")>]
         val unfold<'T,'State> : generator:('State -> ('T * 'State) option) -> state:'State -> 'T[]
+
+        /// <summary>Returns an array with the distinct elements which appear in either the first array or the second array,
+        /// using generic hash and equality comparisons to compare values.</summary>
+        ///
+        /// <param name="array1">The first array.</param>
+        /// <param name="array2">The second array.</param>
+        ///
+        /// <returns>An array that contains the set union of the elements of two arrays.</returns>
+        ///
+        /// <exception cref="System.ArgumentNullException">Thrown when either of the two input arrays is null.</exception>
+        [<CompiledName("Union")>]
+        val union: array1:'T[] -> array2:'T[] -> 'T[] when 'T : equality
 
         /// <summary>Splits an array of pairs into two arrays.</summary>
         /// <param name="array">The input array.</param>

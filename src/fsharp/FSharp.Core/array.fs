@@ -519,6 +519,41 @@ namespace Microsoft.FSharp.Collections
                 let cached = HashSet(itemsToExclude, HashIdentity.Structural)
                 array |> filter cached.Add
 
+        [<CompiledName("Union")>]
+        let union (array1:_[]) (array2:_[]) =
+            checkNonNull "array1" array1
+            checkNonNull "array2" array2
+
+            let res = new System.Collections.Generic.List<_>() // ResizeArray
+
+            let cached = HashSet(HashIdentity.Structural)
+
+            for i = 0 to array2.Length - 1 do
+                if cached.Add array2.[i] then
+                    res.Add array2.[i]
+
+            for i = 0 to array1.Length - 1 do
+                if cached.Add array1.[i] then
+                    res.Add array1.[i]
+
+            res.ToArray()
+
+        [<CompiledName("Intersection")>]
+        let intersection (array1:_[]) (array2:_[]) =
+            checkNonNull "array1" array1
+            checkNonNull "array2" array2
+
+            let res = new System.Collections.Generic.List<_>() // ResizeArray
+
+            let hashSet1 = HashSet(array1, HashIdentity.Structural)
+            let hashSet2 = HashSet(HashIdentity.Structural)
+
+            for i = 0 to array2.Length - 1 do
+                if hashSet2.Add array2.[i] && not (hashSet1.Add array2.[i]) then
+                    res.Add array2.[i]
+
+            res.ToArray()
+
         [<CompiledName("Partition")>]
         let partition f (array: _[]) = 
             checkNonNull "array" array

@@ -272,6 +272,69 @@ type ArrayModule() =
         ()
 
     [<Test>]
+    member this.Union() =
+        // integer array
+        let intArr1 = [| yield! {1..100}
+                         yield! {1..100} |]
+        let intArr2 = [| 51..150 |]
+        let expectedIntArr = [| 1..150 |]
+
+        Assert.AreEqual(expectedIntArr, Array.union intArr2 intArr1)
+
+        // string array
+        let strArr1 = [| "a"; "b"; "c"; "d"; "a" |]
+        let strArr2 = [| "b"; "f"; "c"; "g" |]
+        let expectedStrArr = [| "a"; "b"; "c"; "d"; "f"; "g" |]
+
+        Assert.AreEqual(expectedStrArr, Array.union strArr2 strArr1)
+
+        // empty array
+        let emptyIntArr = [| |]
+        Assert.AreEqual([| 1..100 |], Array.union emptyIntArr intArr1)
+        Assert.AreEqual([| 1..100 |], Array.union intArr1 emptyIntArr)
+        Assert.AreEqual(emptyIntArr, Array.union emptyIntArr emptyIntArr)
+        Assert.AreEqual([| 1..100 |], Array.union intArr1 intArr1)
+
+        // null array
+        let nullArr : int [] = null
+        CheckThrowsArgumentNullException(fun () -> Array.union nullArr emptyIntArr |> ignore)
+        CheckThrowsArgumentNullException(fun () -> Array.union emptyIntArr nullArr |> ignore)
+        CheckThrowsArgumentNullException(fun () -> Array.union nullArr nullArr |> ignore)
+
+        ()
+
+    [<Test>]
+    member this.Intersection() =
+        // integer array
+        let intArr1 = [| yield! {1..100}
+                         yield! {1..100} |]
+        let intArr2 = [|51..150|]
+        let expectedIntArr = [|51..100|]
+
+        Assert.AreEqual(expectedIntArr, Array.intersection intArr2 intArr1)
+
+        // string array
+        let strArr1 = [| "a"; "b"; "c"; "d"; "a" |]
+        let strArr2 = [| "b"; "f"; "c"; "g" |]
+        let expectedStrArr = [| "b"; "c" |]
+
+        Assert.AreEqual(expectedStrArr, Array.intersection strArr2 strArr1)
+
+        // empty array
+        let emptyIntArr = [| |]
+        Assert.AreEqual(emptyIntArr, Array.intersection emptyIntArr intArr1)
+        Assert.AreEqual(emptyIntArr, Array.intersection intArr1 emptyIntArr)
+        Assert.AreEqual(emptyIntArr, Array.intersection emptyIntArr emptyIntArr)
+
+        // null array
+        let nullArr : int [] = null
+        CheckThrowsArgumentNullException(fun () -> Array.intersection nullArr emptyIntArr |> ignore)
+        CheckThrowsArgumentNullException(fun () -> Array.intersection emptyIntArr nullArr |> ignore)
+        CheckThrowsArgumentNullException(fun () -> Array.intersection nullArr nullArr |> ignore)
+
+        ()
+
+    [<Test>]
     member this.Take() =
         Assert.AreEqual([||],Array.take 0 [||])
         Assert.AreEqual([||],Array.take 0 [|"str1";"str2";"str3";"str4"|])
