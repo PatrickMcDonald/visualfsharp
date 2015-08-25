@@ -448,8 +448,7 @@ namespace Microsoft.FSharp.Collections
                 list |> filter cached.Add
 
         [<CompiledName("Union")>]
-        let union list1 list2 =
-            list2 @ list1 |> distinct
+        let union list1 list2 = Microsoft.FSharp.Primitives.Basics.List.union list1 list2
 
         [<CompiledName("Intersection")>]
         let intersection (list1: _ list) list2 =

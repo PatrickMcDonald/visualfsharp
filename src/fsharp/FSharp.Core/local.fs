@@ -467,6 +467,29 @@ module internal List =
             unfoldToFreshConsTail cons f s'
             cons
 
+    let rec unionToFreshConsTail (cache: HashSet<_>) cons list1 list2 =
+        match list1,list2 with
+        | [], [] -> setFreshConsTail cons []
+        | _, [] -> unionToFreshConsTail cache cons list2 list1
+        | _, h::t ->
+            if not (cache.Add h) then
+                unionToFreshConsTail cache cons list1 t
+            else
+                let cons2 = freshConsNoTail h
+                setFreshConsTail cons cons2
+                unionToFreshConsTail cache cons2 list1 t
+
+    let rec union list1 list2 =
+        match list1,list2 with
+        | [], [] -> []
+        | _, [] -> union list2 list1
+        | _, h::t ->
+            let cache = HashSet(LanguagePrimitives.FastGenericEqualityComparer)
+            cache.Add h |> ignore
+            let cons = freshConsNoTail h
+            unionToFreshConsTail cache cons list1 t
+            cons
+
     // optimized mutation-based implementation. This code is only valid in fslib, where mutation of private
     // tail cons cells is permitted in carefully written library code.
     let rec unzipToFreshConsTail cons1a cons1b x = 

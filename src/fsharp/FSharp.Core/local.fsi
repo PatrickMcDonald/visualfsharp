@@ -39,6 +39,7 @@ module internal List =
     val inline ofSeq : seq<'T> -> 'T List
     val splitAt : int -> 'T list -> ('T list * 'T list)
     val truncate : int -> 'T list -> 'T list
+    val union<'T when 'T : equality> : 'T list -> 'T list -> 'T list
 
 module internal Array =
     // The input parameter should be checked by callers if necessary
