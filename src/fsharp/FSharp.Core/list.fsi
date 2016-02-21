@@ -19,6 +19,9 @@ namespace Microsoft.FSharp.Collections
         [<CompiledName("AllPairs")>]
         val allPairs: list1:'T1 list -> list2:'T2 list -> ('T1 * 'T2) list
 
+        [<CompiledName("AllPairs2")>]
+        val allPairs2: list1:'T1 list -> list2:'T2 list -> ('T1 * 'T2) list
+
         /// <summary>Returns a new list that contains the elements of the first list
         /// followed by elements of the second.</summary>
         /// <param name="list1">The first input list.</param>

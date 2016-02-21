@@ -297,6 +297,7 @@ Microsoft.FSharp.Collections.ListModule: Microsoft.FSharp.Collections.FSharpList
 Microsoft.FSharp.Collections.ListModule: Microsoft.FSharp.Collections.FSharpList`1[Microsoft.FSharp.Collections.FSharpList`1[T]] Windowed[T](Int32, Microsoft.FSharp.Collections.FSharpList`1[T])
 Microsoft.FSharp.Collections.ListModule: Microsoft.FSharp.Collections.FSharpList`1[System.Tuple`2[System.Int32,T]] Indexed[T](Microsoft.FSharp.Collections.FSharpList`1[T])
 Microsoft.FSharp.Collections.ListModule: Microsoft.FSharp.Collections.FSharpList`1[System.Tuple`2[T,T]] Pairwise[T](Microsoft.FSharp.Collections.FSharpList`1[T])
+Microsoft.FSharp.Collections.ListModule: Microsoft.FSharp.Collections.FSharpList`1[System.Tuple`2[T1,T2]] AllPairs2[T1,T2](Microsoft.FSharp.Collections.FSharpList`1[T1], Microsoft.FSharp.Collections.FSharpList`1[T2])
 Microsoft.FSharp.Collections.ListModule: Microsoft.FSharp.Collections.FSharpList`1[System.Tuple`2[T1,T2]] AllPairs[T1,T2](Microsoft.FSharp.Collections.FSharpList`1[T1], Microsoft.FSharp.Collections.FSharpList`1[T2])
 Microsoft.FSharp.Collections.ListModule: Microsoft.FSharp.Collections.FSharpList`1[System.Tuple`2[T1,T2]] Zip[T1,T2](Microsoft.FSharp.Collections.FSharpList`1[T1], Microsoft.FSharp.Collections.FSharpList`1[T2])
 Microsoft.FSharp.Collections.ListModule: Microsoft.FSharp.Collections.FSharpList`1[System.Tuple`2[TKey,Microsoft.FSharp.Collections.FSharpList`1[T]]] GroupBy[T,TKey](Microsoft.FSharp.Core.FSharpFunc`2[T,TKey], Microsoft.FSharp.Collections.FSharpList`1[T])
