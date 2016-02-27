@@ -20,6 +20,9 @@ namespace Microsoft.FSharp.Collections
         [<CompiledName("AllPairs")>]
         val allPairs: array1:'T1[] -> array2:'T2[] -> ('T1 * 'T2)[]
 
+        [<CompiledName("AllPairs2")>]
+        val allPairs2: array1:'T1[] -> array2:'T2[] -> ('T1 * 'T2)[]
+
         /// <summary>Builds a new array that contains the elements of the first array followed by the elements of the second array.</summary>
         /// <param name="array1">The first input array.</param>
         /// <param name="array2">The second input array.</param>

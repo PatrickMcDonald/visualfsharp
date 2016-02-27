@@ -660,6 +660,20 @@ namespace Microsoft.FSharp.Collections
                     res.[i * len2 + j] <- (array1.[i],array2.[j])
             res
 
+        [<CompiledName("AllPairs2")>]
+        let allPairs2 (array1: _[]) (array2: _[]) =
+            checkNonNull "array1" array1
+            checkNonNull "array2" array2
+            let len1 = array1.Length
+            let len2 = array2.Length
+            let res = Microsoft.FSharp.Primitives.Basics.Array.zeroCreateUnchecked (len1 * len2)
+            let mutable k = 0
+            for i = 0 to len1 - 1 do
+                for j = 0 to len2 - 1 do
+                    res.[k] <- (array1.[i],array2.[j])
+                    k <- k + 1
+            res
+
         [<CompiledName("Unfold")>]
         let unfold<'T,'State> (f:'State -> ('T*'State) option) (s:'State) =
             let res = ResizeArray<_>()

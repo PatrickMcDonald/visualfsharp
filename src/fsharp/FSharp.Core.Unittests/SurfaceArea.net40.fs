@@ -100,6 +100,7 @@ Microsoft.FSharp.Collections.ArrayModule: System.Collections.Generic.IEnumerable
 Microsoft.FSharp.Collections.ArrayModule: System.String ToString()
 Microsoft.FSharp.Collections.ArrayModule: System.Tuple`2[System.Int32,T][] Indexed[T](T[])
 Microsoft.FSharp.Collections.ArrayModule: System.Tuple`2[T,T][] Pairwise[T](T[])
+Microsoft.FSharp.Collections.ArrayModule: System.Tuple`2[T1,T2][] AllPairs2[T1,T2](T1[], T2[])
 Microsoft.FSharp.Collections.ArrayModule: System.Tuple`2[T1,T2][] AllPairs[T1,T2](T1[], T2[])
 Microsoft.FSharp.Collections.ArrayModule: System.Tuple`2[T1,T2][] Zip[T1,T2](T1[], T2[])
 Microsoft.FSharp.Collections.ArrayModule: System.Tuple`2[T1[],T2[]] Unzip[T1,T2](System.Tuple`2[T1,T2][])

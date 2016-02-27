@@ -3,41 +3,41 @@
     System.GC.WaitForPendingFinalizers()
     System.GC.Collect()
 
-let time description f =
-    collectTheGarbage()
-    let sw = System.Diagnostics.Stopwatch.StartNew()
-    f()
-    collectTheGarbage()
-    sw.Stop()
-    printfn "%s took %O" description sw.Elapsed
-
 let repeat iterations action =
     for i = 1 to iterations do
         action () |> ignore
 
+let time description iterations f =
+    // warm up
+    f() |> ignore
+
+    // start with a clean garbage heap
+    collectTheGarbage()
+
+    // time the repeated iterations plus the final garbage collection
+    let sw = System.Diagnostics.Stopwatch.StartNew()
+    repeat iterations f
+    collectTheGarbage()
+    sw.Stop()
+
+    // print the results
+    printfn "%s took %O" description sw.Elapsed
+
 let timeAll iterations xs ys =
-    List.allPairs xs ys |> ignore
-    time "New List -> List " (fun() -> repeat iterations (fun _ -> List.allPairs xs ys))
-
-    List.allPairs2 xs ys |> ignore
-    time "Old List -> List " (fun() -> repeat iterations (fun _ -> List.allPairs2 xs ys))
-
     let xa, ya = (xs |> Array.ofSeq), (ys |> Array.ofSeq)
-    Array.allPairs xa ya |> ignore
-    time "   Array -> Array" (fun() -> repeat iterations (fun _ -> Array.allPairs xa ya))
-
-    Seq.allPairs xs ys |> Seq.iter ignore
-    time "     List -> Seq  " (fun() -> repeat iterations (fun _ -> Seq.allPairs xs ys |> List.ofSeq))
-
-    Seq.allPairs xa ya |> Seq.iter ignore
-    time "    Array -> Seq  " (fun() -> repeat iterations (fun _ -> Seq.allPairs xa ya |> List.ofSeq))
+    time "  List |> List   " iterations (fun _ -> List.allPairs xs ys)
+    time "  List |> List 2 " iterations (fun _ -> List.allPairs2 xs ys)
+    time " Array |> Array  " iterations (fun _ -> Array.allPairs xa ya)
+    time " Array |> Array 2" iterations (fun _ -> Array.allPairs2 xa ya)
+//    time "  List -> Seq    " iterations (fun _ -> Seq.allPairs xs ys |> List.ofSeq)
+//    time " Array -> Seq    " iterations (fun _ -> Seq.allPairs xa ya |> List.ofSeq)
 
     printfn ""
 
 //#time "on"
 
 timeAll 1000000 [1] [1]
-timeAll 1000 [1..100] [1..100]
-timeAll 1 [1..1000] [1..1000]
+timeAll    1000 [1..100] [1..100]
+timeAll       1 [1..1000] [1..1000]
 
 //#time "off"
