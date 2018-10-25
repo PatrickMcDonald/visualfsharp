@@ -579,6 +579,21 @@ namespace Microsoft.FSharp.Collections
                         acc <- x
                 acc
 
+        [<CompiledName("FindIndexOfMax")>]
+        let inline findIndexOfMax (list:list<_>) =
+            match list with 
+            | [] -> invalidArg "list" LanguagePrimitives.ErrorStrings.InputSequenceEmptyString
+            | h::t ->
+                let mutable acc = h
+                let mutable acci = 0
+                let mutable i = 0
+                for x in t do
+                    i <- i + 1
+                    if x > acc then
+                        acc <- x
+                        acci <- i 
+                acci
+
         [<CompiledName("MaxBy")>]
         let inline maxBy projection (list:list<_>) =
             match list with 
@@ -593,6 +608,22 @@ namespace Microsoft.FSharp.Collections
                         accv <- currv
                 acc
             
+        [<CompiledName("FindIndexOfMaxBy")>]
+        let inline findIndexOfMaxBy projection (list:list<_>) =
+            match list with 
+            | [] -> invalidArg "list" LanguagePrimitives.ErrorStrings.InputSequenceEmptyString
+            | h::t ->
+                let mutable curri = 0
+                let mutable acci = 0
+                let mutable accv = projection h
+                for x in t do
+                    curri <- curri + 1
+                    let currv = projection x
+                    if currv > accv then
+                        accv <- currv
+                        acci <- curri
+                acci
+            
         [<CompiledName("Min")>]
         let inline min          (list:list<_>) =
             match list with 
@@ -603,6 +634,21 @@ namespace Microsoft.FSharp.Collections
                     if x < acc then
                         acc <- x
                 acc
+
+        [<CompiledName("FindIndexOfMin")>]
+        let inline findIndexOfMin          (list:list<_>) =
+            match list with 
+            | [] -> invalidArg "list" LanguagePrimitives.ErrorStrings.InputSequenceEmptyString
+            | h::t ->
+                let mutable curri = 0
+                let mutable acci = 0
+                let mutable acc = h
+                for x in t do
+                    curri <- curri + 1
+                    if x < acc then
+                        acc <- x
+                        acci <- curri
+                acci
 
         [<CompiledName("MinBy")>]
         let inline minBy projection (list:list<_>) =
@@ -617,6 +663,22 @@ namespace Microsoft.FSharp.Collections
                         acc <- x
                         accv <- currv
                 acc
+
+        [<CompiledName("FindIndexOfMinBy")>]
+        let inline findIndexOfMinBy projection (list:list<_>) =
+            match list with 
+            | [] -> invalidArg "list" LanguagePrimitives.ErrorStrings.InputSequenceEmptyString
+            | h::t ->
+                let mutable curri = 0
+                let mutable acci = 0
+                let mutable accv = projection h
+                for x in t do
+                    curri <- curri + 1
+                    let currv = projection x
+                    if currv < accv then
+                        acci <- curri
+                        accv <- currv
+                acci
 
         [<CompiledName("Average")>]
         let inline average      (list:list<'T>) =

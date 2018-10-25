@@ -332,6 +332,71 @@ type ListModule02() =
         ()
 
     [<Test>]
+    member this.FindIndexOfMax() = 
+        // integer List 
+        let resultInt = List.findIndexOfMax  [2..2..20]        
+        Assert.AreEqual(9, resultInt)
+        
+        // string List
+        let resultStr = List.findIndexOfMax ["a";"b";"c";"d"]        
+        Assert.AreEqual(3, resultStr)
+        
+        // empty List
+        CheckThrowsArgumentException ( fun() -> List.findIndexOfMax List.empty |> ignore) 
+        
+        ()
+
+    [<Test>]
+    member this.FindIndexOfMaxBy() = 
+        // integer List 
+        let funcInt x = x%8
+        let resultInt = List.findIndexOfMaxBy funcInt [2..2..20]        
+        Assert.AreEqual(resultInt , 2)
+        
+        // string List
+        let funcStr (x:string)  =x.Length 
+        let resultStr = List.findIndexOfMaxBy funcStr  ["a";"b";"c";"d"]        
+        Assert.AreEqual(0, resultStr)
+        
+        // empty List    
+        CheckThrowsArgumentException ( fun() -> List.findIndexOfMaxBy (fun () -> 1) List.empty |> ignore)
+
+        ()
+
+    [<Test>]
+    member this.FindIndexOfMin() =
+        // integer List 
+        let resultInt = List.findIndexOfMin  [3;7;8;9;4;1;1;2]        
+        Assert.AreEqual(5, resultInt)
+        
+        // string List
+        let resultStr = List.findIndexOfMin ["a";"b";"c";"d"]        
+        Assert.AreEqual(0, resultStr)
+        
+        // empty List   
+        CheckThrowsArgumentException ( fun() -> List.findIndexOfMin List.empty |> ignore)
+        
+        () 
+
+    [<Test>]
+    member this.FindIndexOfMinBy() = 
+        // integer List 
+        let funcInt x = x%8
+        let resultInt = List.findIndexOfMinBy funcInt [3;7;9;4;8;1;1;2]        
+        Assert.AreEqual(4, resultInt)
+        
+        // string List
+        let funcStr (x:string) = x.Length 
+        let resultStr = List.findIndexOfMinBy funcStr  ["a";"b";"c";"d"]        
+        Assert.AreEqual(0, resultStr)
+        
+        // empty List
+        let funcEpt () = 1
+        CheckThrowsArgumentException ( fun() -> List.findIndexOfMinBy funcEpt List.empty |> ignore)
+       
+        ()
+
+    [<Test>]
     member this.Item() =
         // integer List
         let resultInt = List.item 3 [3;7;9;4;8;1;1;2]

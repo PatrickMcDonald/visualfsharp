@@ -409,6 +409,60 @@ namespace Microsoft.FSharp.Collections
         [<CompiledName("FindIndexBack")>]
         val findIndexBack: predicate:('T -> bool) -> source:seq<'T> -> int
 
+        /// <summary>Returns the index of the greatest of all elements of the sequence, compared via Operators.max</summary>
+        ///
+        /// <param name="source">The input sequence.</param>
+        ///
+        /// <exception cref="System.ArgumentNullException">Thrown when the input sequence is null.</exception>
+        /// <exception cref="System.ArgumentException">Thrown when the input sequence is empty.</exception>
+        ///
+        /// <returns>The index of the largest element of the sequence.</returns>
+        ///
+        /// <remarks>This function consumes the whole input sequence before returning the result.</remarks>
+        [<CompiledName("FindIndexOfMax")>]
+        val inline findIndexOfMax     : source:seq<'T> -> int when 'T : comparison 
+
+        /// <summary>Returns the index of the greatest of all elements of the sequence, compared via Operators.max on the function result.</summary>
+        ///
+        /// <param name="projection">A function to transform items from the input sequence into comparable keys.</param>
+        /// <param name="source">The input sequence.</param>
+        ///
+        /// <returns>The indexof the largest element of the sequence.</returns>
+        ///
+        /// <exception cref="System.ArgumentNullException">Thrown when the input sequence is null.</exception>
+        /// <exception cref="System.ArgumentException">Thrown when the input sequence is empty.</exception>
+        ///
+        /// <remarks>This function consumes the whole input sequence before returning the result.</remarks>
+        [<CompiledName("FindIndexOfMaxBy")>]
+        val inline findIndexOfMaxBy  : projection:('T -> 'U) -> source:seq<'T> -> int when 'U : comparison 
+
+        /// <summary>Returns the index of the lowest of all elements of the sequence, compared via <c>Operators.min</c>.</summary>
+        ///
+        /// <param name="source">The input sequence.</param>
+        ///
+        /// <returns>The index of the smallest element of the sequence.</returns>
+        ///
+        /// <exception cref="System.ArgumentNullException">Thrown when the input sequence is null.</exception>
+        /// <exception cref="System.ArgumentException">Thrown when the input sequence is empty.</exception>
+        ///
+        /// <remarks>This function consumes the whole input sequence before returning the result.</remarks>
+        [<CompiledName("FindIndexOfMin")>]
+        val inline findIndexOfMin     : source:seq<'T> -> int when 'T : comparison 
+
+        /// <summary>Returns the index of the lowest of all elements of the sequence, compared via Operators.min on the function result.</summary>
+        ///
+        /// <param name="projection">A function to transform items from the input sequence into comparable keys.</param>
+        /// <param name="source">The input sequence.</param>
+        ///
+        /// <returns>The index of the smallest element of the sequence.</returns>
+        ///
+        /// <exception cref="System.ArgumentNullException">Thrown when the input sequence is null.</exception>
+        /// <exception cref="System.ArgumentException">Thrown when the input sequence is empty.</exception>
+        ///
+        /// <remarks>This function consumes the whole input sequence before returning the result.</remarks>
+        [<CompiledName("FindIndexOfMinBy")>]
+        val inline findIndexOfMinBy  : projection:('T -> 'U) -> source:seq<'T> -> int when 'U : comparison 
+
         /// <summary>Applies a function to each element of the collection, threading an accumulator argument
         /// through the computation. If the input function is <c>f</c> and the elements are <c>i0...iN</c> 
         /// then computes <c>f (... (f s i0)...) iN</c></summary>
@@ -778,6 +832,8 @@ namespace Microsoft.FSharp.Collections
         /// <exception cref="System.ArgumentException">Thrown when the input sequence is empty.</exception>
         ///
         /// <returns>The largest element of the sequence.</returns>
+        ///
+        /// <remarks>This function consumes the whole input sequence before returning the result.</remarks>
         [<CompiledName("Max")>]
         val inline max     : source:seq<'T> -> 'T when 'T : comparison 
 
@@ -790,6 +846,8 @@ namespace Microsoft.FSharp.Collections
         ///
         /// <exception cref="System.ArgumentNullException">Thrown when the input sequence is null.</exception>
         /// <exception cref="System.ArgumentException">Thrown when the input sequence is empty.</exception>
+        ///
+        /// <remarks>This function consumes the whole input sequence before returning the result.</remarks>
         [<CompiledName("MaxBy")>]
         val inline maxBy  : projection:('T -> 'U) -> source:seq<'T> -> 'T when 'U : comparison 
 
@@ -815,6 +873,8 @@ namespace Microsoft.FSharp.Collections
         ///
         /// <exception cref="System.ArgumentNullException">Thrown when the input sequence is null.</exception>
         /// <exception cref="System.ArgumentException">Thrown when the input sequence is empty.</exception>
+        ///
+        /// <remarks>This function consumes the whole input sequence before returning the result.</remarks>
         [<CompiledName("Min")>]
         val inline min     : source:seq<'T> -> 'T when 'T : comparison 
 
@@ -827,6 +887,8 @@ namespace Microsoft.FSharp.Collections
         ///
         /// <exception cref="System.ArgumentNullException">Thrown when the input sequence is null.</exception>
         /// <exception cref="System.ArgumentException">Thrown when the input sequence is empty.</exception>
+        ///
+        /// <remarks>This function consumes the whole input sequence before returning the result.</remarks>
         [<CompiledName("MinBy")>]
         val inline minBy  : projection:('T -> 'U) -> source:seq<'T> -> 'T when 'U : comparison 
 

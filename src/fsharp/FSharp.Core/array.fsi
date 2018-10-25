@@ -339,6 +339,48 @@ namespace Microsoft.FSharp.Collections
         [<CompiledName("FindIndexBack")>]
         val findIndexBack: predicate:('T -> bool) -> array:'T[] -> int
 
+        /// <summary>Returns the index of the greatest of all elements of the array, compared via Operators.max on the function result.</summary>
+        ///
+        /// <remarks>Throws ArgumentException for empty arrays.</remarks>
+        /// <param name="array">The input array.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the input array is null.</exception>
+        /// <exception cref="System.ArgumentException">Thrown when the input array is empty.</exception>
+        /// <returns>The index of the maximum element.</returns>
+        [<CompiledName("FindIndexOfMax")>]
+        val inline findIndexOfMax     : array:'T[] -> int  when 'T : comparison 
+
+        /// <summary>Returns the index of the greatest of all elements of the array, compared via Operators.max on the function result.</summary>
+        ///
+        /// <remarks>Throws ArgumentException for empty arrays.</remarks>
+        /// <param name="projection">The function to transform the elements into a type supporting comparison.</param>
+        /// <param name="array">The input array.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the input array is null.</exception>
+        /// <exception cref="System.ArgumentException">Thrown when the input array is empty.</exception>
+        /// <returns>The index of the maximum element.</returns>
+        [<CompiledName("FindIndexOfMaxBy")>]
+        val inline findIndexOfMaxBy  : projection:('T -> 'U) -> array:'T[] -> int when 'U : comparison 
+
+        /// <summary>Returns the index of the lowest of all elements of the array, compared via Operators.min.</summary>
+        ///
+        /// <remarks>Throws ArgumentException for empty arrays</remarks>
+        /// <param name="array">The input array.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the input array is null.</exception>
+        /// <exception cref="System.ArgumentException">Thrown when the input array is empty.</exception>
+        /// <returns>The index of the minimum element.</returns>
+        [<CompiledName("FindIndexOfMin")>]
+        val inline findIndexOfMin     : array:'T[] -> int  when 'T : comparison 
+
+        /// <summary>Returns the index of the lowest of all elements of the array, compared via Operators.min on the function result.</summary>
+        ///
+        /// <remarks>Throws ArgumentException for empty arrays.</remarks>
+        /// <param name="projection">The function to transform the elements into a type supporting comparison.</param>
+        /// <param name="array">The input array.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the input array is null.</exception>
+        /// <exception cref="System.ArgumentException">Thrown when the input array is empty.</exception>
+        /// <returns>The index of the minimum element.</returns>
+        [<CompiledName("FindIndexOfMinBy")>]
+        val inline findIndexOfMinBy  : projection:('T -> 'U) -> array:'T[] -> int when 'U : comparison 
+
         /// <summary>Tests if all elements of the array satisfy the given predicate.</summary>
         ///
         /// <remarks>The predicate is applied to the elements of the input collection. If any application 

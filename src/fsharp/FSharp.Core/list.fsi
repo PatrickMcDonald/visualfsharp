@@ -240,6 +240,44 @@ namespace Microsoft.FSharp.Collections
         [<CompiledName("FindIndexBack")>]
         val findIndexBack: predicate:('T -> bool) -> list:'T list -> int
 
+        /// <summary>Return the index of the greatest of all elements of the list, compared via Operators.max.</summary>
+        ///
+        /// <remarks>Raises <c>System.ArgumentException</c> if <c>list</c> is empty</remarks>
+        /// <param name="list">The input list.</param>
+        /// <exception cref="System.ArgumentException">Thrown when the list is empty.</exception>
+        /// <returns>The index of the maximum element.</returns>
+        [<CompiledName("FindIndexOfMax")>]
+        val inline findIndexOfMax     : list:'T list -> int when 'T : comparison 
+
+        /// <summary>Returns the index of the greatest of all elements of the list, compared via Operators.max on the function result.</summary>
+        ///
+        /// <remarks>Raises <c>System.ArgumentException</c> if <c>list</c> is empty.</remarks>
+        /// <param name="projection">The function to transform the list elements into the type to be compared.</param>
+        /// <param name="list">The input list.</param>
+        /// <exception cref="System.ArgumentException">Thrown when the list is empty.</exception>
+        /// <returns>The index of the maximum element.</returns>
+        [<CompiledName("FindIndexOfMaxBy")>]
+        val inline findIndexOfMaxBy   : projection:('T -> 'U) -> list:'T list -> int when 'U : comparison 
+
+        /// <summary>Returns the index of the lowest of all elements of the list, compared via Operators.min.</summary>
+        ///
+        /// <remarks>Raises <c>System.ArgumentException</c> if <c>list</c> is empty</remarks>
+        /// <param name="list">The input list.</param>
+        /// <exception cref="System.ArgumentException">Thrown when the list is empty.</exception>
+        /// <returns>The index of the minimum value.</returns>
+        [<CompiledName("FindIndexOfMin")>]
+        val inline findIndexOfMin     : list:'T list -> int when 'T : comparison 
+
+        /// <summary>Returns the index of the lowest of all elements of the list, compared via Operators.min on the function result</summary>
+        ///
+        /// <remarks>Raises <c>System.ArgumentException</c> if <c>list</c> is empty.</remarks>
+        /// <param name="projection">The function to transform list elements into the type to be compared.</param>
+        /// <param name="list">The input list.</param>
+        /// <exception cref="System.ArgumentException">Thrown when the list is empty.</exception>
+        /// <returns>The index of the minimum value.</returns>
+        [<CompiledName("FindIndexOfMinBy")>]
+        val inline findIndexOfMinBy   : projection:('T -> 'U) -> list:'T list -> int when 'U : comparison 
+
         /// <summary>Returns a new collection containing only the elements of the collection
         /// for which the given predicate returns "true"</summary>
         /// <param name="predicate">The function to test the input elements.</param>

@@ -344,7 +344,94 @@ type ArrayModule2() =
         CheckThrowsArgumentException(fun () -> Array.minBy funcInt (Array.empty<int>) |> ignore)
         
         ()
+
+    [<Test>]
+    member this.FindIndexOfMax() = 
+        // integer array 
+        let resultInt = Array.findIndexOfMax  [|2..2..20|]
+        if resultInt <> 9 then Assert.Fail()
         
+        // string array
+        let resultStr = Array.findIndexOfMax [|"t"; "ahe"; "Lists"; "Are";  "Commonly" ; "List";"a" |]
+        if resultStr <> 0 then Assert.Fail()
+        
+        // empty array -- argumentexception   
+        
+        // null array
+        let nullArr = null:string[]      
+        CheckThrowsArgumentNullException (fun () -> Array.findIndexOfMax   nullArr  |> ignore)  
+        
+        // len = 0
+        CheckThrowsArgumentException(fun() -> Array.findIndexOfMax  [||] |> ignore)
+        
+        ()
+
+    [<Test>]
+    member this.FindIndexOfMaxBy()= 
+        // integer array 
+        let funcInt x = x%8
+        let resultInt = Array.findIndexOfMaxBy funcInt [|2..2..20|]
+        if resultInt <> 2 then Assert.Fail()
+        
+        // string array
+        let funcStr (x:string) = x.Length 
+        let resultStr = Array.findIndexOfMaxBy funcStr  [|"Lists"; "Are";  "Commonly" ; "List"|]
+        if resultStr <> 2 then Assert.Fail()    
+        
+        // empty array -- argumentexception    
+
+        // null array
+        let nullArr = null:string[]      
+        CheckThrowsArgumentNullException (fun () -> Array.findIndexOfMaxBy funcStr   nullArr  |> ignore)  
+        
+        // len = 0
+        CheckThrowsArgumentException(fun() -> Array.findIndexOfMaxBy funcInt (Array.empty<int>) |> ignore)
+        
+        ()
+
+    [<Test>]
+    member this.FindIndexOfMin() =
+        // integer array 
+        let resultInt = Array.findIndexOfMin  [|3;7;8;9;4;1;1;2|]
+        if resultInt <> 5 then Assert.Fail()
+        
+        // string array
+        let resultStr = Array.findIndexOfMin [|"a"; "Lists";  "Commonly" ; "List"  |] 
+        if resultStr <> 2 then Assert.Fail()
+        
+        // empty array -- argumentexception   
+        
+        // null array
+        let nullArr = null:string[]      
+        CheckThrowsArgumentNullException (fun () -> Array.findIndexOfMin   nullArr  |> ignore)  
+        
+        // len = 0
+        CheckThrowsArgumentException(fun () -> Array.findIndexOfMin  [||] |> ignore)
+        
+        () 
+
+    [<Test>]
+    member this.FindIndexOfMinBy()= 
+        // integer array 
+        let funcInt x = x%8
+        let resultInt = Array.findIndexOfMinBy funcInt [|3;7;9;4;8;1;1;2|]
+        if resultInt <> 4 then Assert.Fail()
+        
+        // string array
+        let funcStr (x:string) = x.Length 
+        let resultStr = Array.findIndexOfMinBy funcStr  [|"Lists"; "Are";  "Commonly" ; "List"|]
+        if resultStr <> 1 then Assert.Fail()    
+        
+        // empty array -- argumentexception    
+
+        // null array
+        let nullArr = null:string[]      
+        CheckThrowsArgumentNullException (fun () -> Array.findIndexOfMinBy funcStr   nullArr  |> ignore)  
+        
+        // len = 0
+        CheckThrowsArgumentException(fun () -> Array.findIndexOfMinBy funcInt (Array.empty<int>) |> ignore)
+        
+        ()
 
     [<Test>]
     member this.Of_List() =

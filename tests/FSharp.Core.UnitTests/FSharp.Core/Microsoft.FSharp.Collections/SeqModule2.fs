@@ -890,6 +890,92 @@ type SeqModule2() =
         ()
 
     [<Test>]
+    member this.FindIndexOfMax() =
+         // integer Seq
+        let resultInt = Seq.findIndexOfMax { 10..20 } 
+        
+        Assert.AreEqual(10,resultInt)
+        
+        // string Seq
+       
+        let resultStr = Seq.findIndexOfMax (seq ["Lists"; "Are";  "MaxString" ; "List" ])
+        Assert.AreEqual(2,resultStr)
+          
+        // empty Seq
+        CheckThrowsArgumentException(fun () -> Seq.findIndexOfMax ( Seq.empty : seq<float>) |> ignore)
+        
+        // null Seq
+        let nullSeq:seq<'a> = null 
+        CheckThrowsArgumentNullException (fun () -> Seq.findIndexOfMax nullSeq |> ignore)
+        
+        ()
+        
+    [<Test>]
+    member this.FindIndexOfMaxBy() =
+    
+        // integer Seq
+        let funcInt x = x % 8
+        let resultInt = Seq.findIndexOfMaxBy funcInt { 2..2..20 } 
+        Assert.AreEqual(2,resultInt)
+        
+        // string Seq
+        let funcStr (x:string)  =x.Length 
+        let resultStr = Seq.findIndexOfMaxBy funcStr (seq ["Lists"; "Are";  "Commonly" ; "List" ])
+        Assert.AreEqual(2,resultStr)
+          
+        // empty Seq
+        CheckThrowsArgumentException (fun () -> Seq.findIndexOfMaxBy funcInt (Seq.empty : seq<int>) |> ignore)
+        
+        // null Seq
+        let nullSeq:seq<'a> = null 
+        CheckThrowsArgumentNullException (fun () ->Seq.findIndexOfMaxBy funcInt nullSeq |> ignore)
+        
+        ()
+        
+    [<Test>]
+    member this.FindIndexOfMinBy() =
+    
+        // integer Seq
+        let funcInt x = x % 8
+        let resultInt = Seq.findIndexOfMinBy funcInt { 2..2..20 } 
+        Assert.AreEqual(3,resultInt)
+        
+        // string Seq
+        let funcStr (x:string)  =x.Length 
+        let resultStr = Seq.findIndexOfMinBy funcStr (seq ["Lists"; "Are";  "Commonly" ; "List" ])
+        Assert.AreEqual(1,resultStr)
+          
+        // empty Seq
+        CheckThrowsArgumentException (fun () -> Seq.findIndexOfMinBy funcInt (Seq.empty : seq<int>) |> ignore) 
+        
+        // null Seq
+        let nullSeq:seq<'a> = null 
+        CheckThrowsArgumentNullException (fun () ->Seq.findIndexOfMinBy funcInt nullSeq |> ignore)
+        
+        ()
+        
+          
+    [<Test>]
+    member this.FindIndexOfMin() =
+
+         // integer Seq
+        let resultInt = Seq.findIndexOfMin { 10..20 } 
+        Assert.AreEqual(0,resultInt)
+        
+        // string Seq
+        let resultStr = Seq.findIndexOfMin (seq ["Lists"; "Are";  "minString" ; "List" ])
+        Assert.AreEqual(1,resultStr)
+          
+        // empty Seq
+        CheckThrowsArgumentException (fun () -> Seq.findIndexOfMin (Seq.empty : seq<int>) |> ignore) 
+        
+        // null Seq
+        let nullSeq:seq<'a> = null 
+        CheckThrowsArgumentNullException (fun () -> Seq.findIndexOfMin nullSeq |> ignore)
+        
+        ()
+
+    [<Test>]
     member this.Item() =
          // integer Seq
         let resultInt = Seq.item 3 { 10..20 }

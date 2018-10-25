@@ -1120,6 +1120,19 @@ namespace Microsoft.FSharp.Collections
                     acc <- curr
             acc
 
+        [<CompiledName("FindIndexOfMin")>]
+        let inline findIndexOfMin (array:_[]) = 
+            checkNonNull "array" array
+            if array.Length = 0 then invalidArg "array" LanguagePrimitives.ErrorStrings.InputArrayEmptyString
+            let mutable acc = array.[0]
+            let mutable acci = 0
+            for i = 1 to array.Length - 1 do
+                let curr = array.[i]
+                if curr < acc then 
+                    acc <- curr
+                    acci <- i
+            acci
+
         [<CompiledName("MinBy")>]
         let inline minBy projection (array:_[]) = 
             checkNonNull "array" array
@@ -1134,6 +1147,20 @@ namespace Microsoft.FSharp.Collections
                     accv <- currv
             accv
 
+        [<CompiledName("FindIndexOfMinBy")>]
+        let inline findIndexOfMinBy projection (array:_[]) = 
+            checkNonNull "array" array
+            if array.Length = 0 then invalidArg "array" LanguagePrimitives.ErrorStrings.InputArrayEmptyString
+            let mutable acci = 0
+            let mutable acc = projection array.[0]
+            for i = 1 to array.Length - 1 do
+                let currv = array.[i]
+                let curr = projection currv
+                if curr < acc then
+                    acc <- curr
+                    acci <- i
+            acci
+
         [<CompiledName("Max")>]
         let inline max (array:_[]) = 
             checkNonNull "array" array
@@ -1144,6 +1171,19 @@ namespace Microsoft.FSharp.Collections
                 if curr > acc then 
                     acc <- curr
             acc
+
+        [<CompiledName("FindIndexOfMax")>]
+        let inline findIndexOfMax (array:_[]) = 
+            checkNonNull "array" array
+            if array.Length = 0 then invalidArg "array" LanguagePrimitives.ErrorStrings.InputArrayEmptyString
+            let mutable acc = array.[0]
+            let mutable acci = 0
+            for i = 1 to array.Length - 1 do
+                let curr = array.[i]
+                if curr > acc then 
+                    acc <- curr
+                    acci <- i
+            acci
 
         [<CompiledName("MaxBy")>]
         let inline maxBy projection (array:_[]) = 
@@ -1158,6 +1198,20 @@ namespace Microsoft.FSharp.Collections
                     acc <- curr
                     accv <- currv
             accv
+
+        [<CompiledName("FindIndexOfMaxBy")>]
+        let inline findIndexOfMaxBy projection (array:_[]) = 
+            checkNonNull "array" array
+            if array.Length = 0 then invalidArg "array" LanguagePrimitives.ErrorStrings.InputArrayEmptyString
+            let mutable acci = 0
+            let mutable acc = projection array.[0]
+            for i = 1 to array.Length - 1 do
+                let currv = array.[i]
+                let curr = projection currv
+                if curr > acc then
+                    acc <- curr
+                    acci <- i
+            acci
 
         [<CompiledName("Average")>]
         let inline average      (array:'T[]) = 

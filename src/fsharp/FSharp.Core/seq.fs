@@ -1227,6 +1227,23 @@ namespace Microsoft.FSharp.Collections
                     acc <- curr
             acc
 
+        [<CompiledName("FindIndexOfMin")>]
+        let inline findIndexOfMin (source: seq<_>) =
+            checkNonNull "source" source
+            use e = source.GetEnumerator()
+            if not (e.MoveNext()) then
+                invalidArg "source" LanguagePrimitives.ErrorStrings.InputSequenceEmptyString
+            let mutable curri = 0
+            let mutable acci = 0
+            let mutable acc = e.Current
+            while e.MoveNext() do
+                curri <- curri + 1
+                let curr = e.Current
+                if curr < acc then
+                    acc <- curr
+                    acci <- curri
+            acci
+
         [<CompiledName("MinBy")>]
         let inline minBy (projection : 'T -> 'U) (source: seq<'T>) : 'T =
             checkNonNull "source" source
@@ -1243,6 +1260,25 @@ namespace Microsoft.FSharp.Collections
                     acc <- curr
                     accv <- currv
             accv
+
+        [<CompiledName("FindIndexOfMinBy")>]
+        let inline findIndexOfMinBy (projection : 'T -> 'U) (source: seq<'T>) : int =
+            checkNonNull "source" source
+            use e = source.GetEnumerator()
+            if not (e.MoveNext()) then
+                invalidArg "source" LanguagePrimitives.ErrorStrings.InputSequenceEmptyString
+            let first = e.Current
+            let mutable acc = projection first
+            let mutable curri = 0
+            let mutable acci = 0
+            while e.MoveNext() do
+                let currv = e.Current
+                let curr = projection currv
+                curri <- curri + 1
+                if curr < acc then
+                    acc <- curr
+                    acci <- curri
+            acci
 
 (*
         [<CompiledName("MinValueBy")>]
@@ -1274,6 +1310,23 @@ namespace Microsoft.FSharp.Collections
                     acc <- curr
             acc
 
+        [<CompiledName("FindIndexOfMax")>]
+        let inline findIndexOfMax (source: seq<_>) =
+            checkNonNull "source" source
+            use e = source.GetEnumerator()
+            if not (e.MoveNext()) then
+                invalidArg "source" LanguagePrimitives.ErrorStrings.InputSequenceEmptyString
+            let mutable acc = e.Current
+            let mutable curri = 0
+            let mutable acci = 0
+            while e.MoveNext() do
+                let curr = e.Current
+                curri <- curri + 1
+                if curr > acc then
+                    acc <- curr
+                    acci <- curri
+            acci
+
         [<CompiledName("MaxBy")>]
         let inline maxBy (projection : 'T -> 'U) (source: seq<'T>) : 'T =
             checkNonNull "source" source
@@ -1291,6 +1344,24 @@ namespace Microsoft.FSharp.Collections
                     accv <- currv
             accv
 
+        [<CompiledName("FindIndexOfMaxBy")>]
+        let inline findIndexOfMaxBy (projection : 'T -> 'U) (source: seq<'T>) : int =
+            checkNonNull "source" source
+            use e = source.GetEnumerator()
+            if not (e.MoveNext()) then
+                invalidArg "source" LanguagePrimitives.ErrorStrings.InputSequenceEmptyString
+            let first = e.Current
+            let mutable acc = projection first
+            let mutable curri = 0
+            let mutable acci = 0
+            while e.MoveNext() do
+                let currv = e.Current
+                let curr = projection currv
+                curri <- curri + 1
+                if curr > acc then
+                    acc <- curr
+                    acci <- curri
+            acci
 
 (*
         [<CompiledName("MaxValueBy")>]
