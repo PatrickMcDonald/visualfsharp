@@ -734,6 +734,54 @@ let ``minBy is consistent`` () =
     smallerSizeCheck minBy<string>
     smallerSizeCheck minBy<NormalFloat>
 
+let findIndexOfMax<'a when 'a : comparison> (xs : 'a []) =
+    let s = runAndCheckIfAnyError (fun () -> xs |> Seq.findIndexOfMax)
+    let l = runAndCheckIfAnyError (fun () -> xs |> List.ofArray |> List.findIndexOfMax)
+    let a = runAndCheckIfAnyError (fun () -> xs |> Array.findIndexOfMax)
+    consistency "findIndexOfMax" s l a
+
+[<Test>]
+let ``findIndexOfMax is consistent`` () =
+    smallerSizeCheck findIndexOfMax<int>
+    smallerSizeCheck findIndexOfMax<string>
+    smallerSizeCheck findIndexOfMax<NormalFloat>
+
+let findIndexOfMaxBy<'a when 'a : comparison> (xs : 'a []) f =
+    let s = runAndCheckIfAnyError (fun () -> xs |> Seq.findIndexOfMaxBy f)
+    let l = runAndCheckIfAnyError (fun () -> xs |> List.ofArray |> List.findIndexOfMaxBy f)
+    let a = runAndCheckIfAnyError (fun () -> xs |> Array.findIndexOfMaxBy f)
+    consistency "findIndexOfMaxBy" s l a
+
+[<Test>]
+let ``findIndexOfMaxBy is consistent`` () =
+    smallerSizeCheck findIndexOfMaxBy<int>
+    smallerSizeCheck findIndexOfMaxBy<string>
+    smallerSizeCheck findIndexOfMaxBy<NormalFloat>
+ 
+let findIndexOfMin<'a when 'a : comparison> (xs : 'a []) =
+    let s = runAndCheckIfAnyError (fun () -> xs |> Seq.findIndexOfMin)
+    let l = runAndCheckIfAnyError (fun () -> xs |> List.ofArray |> List.findIndexOfMin)
+    let a = runAndCheckIfAnyError (fun () -> xs |> Array.findIndexOfMin)
+    consistency "findIndexOfMin" s l a
+
+[<Test>]
+let ``findIndexOfMin is consistent`` () =
+    smallerSizeCheck findIndexOfMin<int>
+    smallerSizeCheck findIndexOfMin<string>
+    smallerSizeCheck findIndexOfMin<NormalFloat>
+
+let findIndexOfMinBy<'a when 'a : comparison> (xs : 'a []) f =
+    let s = runAndCheckIfAnyError (fun () -> xs |> Seq.findIndexOfMinBy f)
+    let l = runAndCheckIfAnyError (fun () -> xs |> List.ofArray |> List.findIndexOfMinBy f)
+    let a = runAndCheckIfAnyError (fun () -> xs |> Array.findIndexOfMinBy f)
+    consistency "findIndexOfMinBy" s l a
+
+[<Test>]
+let ``findIndexOfMinBy is consistent`` () =
+    smallerSizeCheck findIndexOfMinBy<int>
+    smallerSizeCheck findIndexOfMinBy<string>
+    smallerSizeCheck findIndexOfMinBy<NormalFloat>
+
 let pairwise<'a when 'a : comparison> (xs : 'a []) =
     let s = run (fun () -> xs |> Seq.pairwise |> Seq.toArray)
     let l = run (fun () -> xs |> List.ofArray |> List.pairwise |> List.toArray)
